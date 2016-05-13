@@ -185,8 +185,9 @@ LOCATION '/tmp/tweets_staging';
 ### Display the top 10 twitter handles by tweet volume
 Query the tweets table, grouping tweet count by twitter handle and display only the top 10 in descending order.
 
-
-#### Display the top 10 twitter handles by tweet volume
-`select displayname, count(*) as tweetcount from tweets group by displayname order by tweetcount desc limit 10;`
+```
+# Display the top 10 twitter handles by tweet volume
+select displayname, count(*) as tweetcount from tweets group by displayname order by tweetcount desc limit 10;
+```
 
 
