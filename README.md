@@ -165,25 +165,28 @@ Create the hive table to allow querying the tweets.
 
 ##### Create the tweets table
 
-`create external table tweets(
+`create external table tweets(`
 
-  tweet_id bigint, 
+  `tweet_id bigint, `
   
-  created_unixtime bigint, 
+  `created_unixtime bigint, `
   
-  created_time string, 
+  `created_time string, `
   
-  displayname string, 
+  `displayname string, `
   
-  msg string,
+  `msg string,`
   
-  fulltext string
+  `fulltext string`
   
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY '|'
-STORED AS TEXTFILE
-LOCATION '/tmp/tweets_staging';`
+`)`
+`ROW FORMAT DELIMITED`
+
+`FIELDS TERMINATED BY '|'`
+
+`STORED AS TEXTFILE`
+
+`LOCATION '/tmp/tweets_staging';`
 
 ### Display the top 10 twitter handles by tweet volume
 Query the tweets table, grouping tweet count by twitter handle and display only the top 10 in descending order.
