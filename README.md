@@ -57,7 +57,7 @@ Banana is a tool for creating dashboards on Solr data. Download and install the 
 
 ```
 # Download and install the Banana dashboard
-`wget https://raw.githubusercontent.com/abajwa-hw/ambari-nifi-service/master/demofiles/default.json -O /opt/lucidworks-hdpsearch/solr/server/solr-webapp/webapp/banana/app/dashboards/default.json`
+wget https://raw.githubusercontent.com/abajwa-hw/ambari-nifi-service/master/demofiles/default.json -O /opt/lucidworks-hdpsearch/solr/server/solr-webapp/webapp/banana/app/dashboards/default.json
 ```
 
 ###Download the Solr Configuration
@@ -65,7 +65,7 @@ Due to the timestamp used by Twitter, it is necessary to update the Solr configu
 
 ```
 # Download and install the updated Solr configuration
-`wget https://raw.githubusercontent.com/sakserv/twitter-nifi-solrconfig/master/solrconfig.xml -O /opt/lucidworks-hdpsearch/solr/server/solr/configsets/data_driven_schema_configs/conf/solrconfig.xml`
+wget https://raw.githubusercontent.com/sakserv/twitter-nifi-solrconfig/master/solrconfig.xml -O /opt/lucidworks-hdpsearch/solr/server/solr/configsets/data_driven_schema_configs/conf/solrconfig.xml
 ```
 
 #### Start Solr
