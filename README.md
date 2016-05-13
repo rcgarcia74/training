@@ -15,14 +15,13 @@ Where possible, the following pre-requisites should be completed prior to start 
 If not already completed, change the Ambari admin password. It is recommended to use the following password: Welcome2lab!
 
 ### Run ambari-admin-password-reset:
+```
+# Reset the Ambari admin password
+ambari-admin-password-reset
 
-
-#### Reset the Ambari admin password
-`ambari-admin-password-reset`
-
-#### Restart Ambari agent
-`service ambari-agent restart`
-
+# Restart Ambari agent
+service ambari-agent restart
+```
 
 Log into the Ambari Web Interface at http://<public ip>:8080/ using the new credentials. Note, it may take several minutes for the Ambari Web Interface to become available after restart. 
 
@@ -30,9 +29,10 @@ Log into the Ambari Web Interface at http://<public ip>:8080/ using the new cred
 Sandbox is intended to run on minimal hardware requirements, as a result, the Hive, Tez, and YARN configurations are less than ideal out of the box. Run the following script to increase the memory available to Hive, Tez, and YARN.
 
 Run the optimize_hive_config script:
-
-##### Increase Hive, Tez, and YARN memory
+```
+# Increase Hive, Tez, and YARN memory
 `bash <(curl -s https://raw.githubusercontent.com/sakserv/twitter-nifi-lab-setup/master/optimize_hive_config.sh)`.
+```
 
 ##Install HDF (NiFi) via an Ambari Service
 ###Install HDF (NiFi) via Ambari:
@@ -49,38 +49,42 @@ As this is a single node Sandbox, leave the defaults on the Assign Masters panel
 
 Finally, select Deploy and wait for Ambari to install and start HDF (NiFi). Once the install completes, select Next and then Complete.
 
-##Configure Solr
+## Configure Solr
 Solr enables the ability to search across large corpuses of information through specialized indexing techniques. Solr will be combined with Banana, a visualization tool, to create search driven dashboards of Twitter data.
 
 ###Download the Banana Dashboard
 Banana is a tool for creating dashboards on Solr data. Download and install the pre-built twitter dashboard.
 
-
-#### Download and install the Banana dashboard
+```
+# Download and install the Banana dashboard
 `wget https://raw.githubusercontent.com/abajwa-hw/ambari-nifi-service/master/demofiles/default.json -O /opt/lucidworks-hdpsearch/solr/server/solr-webapp/webapp/banana/app/dashboards/default.json`
+```
 
 ###Download the Solr Configuration
 Due to the timestamp used by Twitter, it is necessary to update the Solr configuration to support this additional timestamp format.
 
-
-#### Download and install the updated Solr configuration
+```
+# Download and install the updated Solr configuration
 `wget https://raw.githubusercontent.com/sakserv/twitter-nifi-solrconfig/master/solrconfig.xml -O /opt/lucidworks-hdpsearch/solr/server/solr/configsets/data_driven_schema_configs/conf/solrconfig.xml`
-
-### Start Solr
-Start Solr in SolrCloud mode.
-
+```
 
 #### Start Solr
-`export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk.x86_64`
+Start Solr in SolrCloud mode.
 
-`/opt/lucidworks-hdpsearch/solr/bin/solr start -c -z localhost:2181`
+```
+# Start Solr
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk.x86_64
+
+/opt/lucidworks-hdpsearch/solr/bin/solr start -c -z localhost:2181
+```
 
 ###Create the Solr Collection
 A Solr collection is the index and configuration associated with the data that will be stored in the search index. Also specified are the number of replicas and shards, as this is a single node cluster, only a single replica and shard are used.
 
-
-##### Create the Tweets Collection
-`/opt/lucidworks-hdpsearch/solr/bin/solr create -c tweets -d data_driven_schema_configs -s 1 -rf 1`
+```
+# Create the Tweets Collection
+/opt/lucidworks-hdpsearch/solr/bin/solr create -c tweets -d data_driven_schema_configs -s 1 -rf 1
+```
 
 ## Import the Twitter HDF (NiFi) Template
 HDF (NiFi) has a powerful templating system to allow for easy sharing and consumption of dataflows. The following imports the Twitter dataflow template and starts the collection of Tweets into Solr and HDFS.
@@ -162,32 +166,22 @@ To access Hive, ssh into the server  and execute the hive CLI tool as the hdfs u
 ### Create the Hive Table
 Create the hive table to allow querying the tweets.
 
-
+````
 ##### Create the tweets table
 
-`create external table tweets(`
-
-  `tweet_id bigint, `
-  
-  `created_unixtime bigint, `
-  
-  `created_time string, `
-  
-  `displayname string, `
-  
-  `msg string,`
-  
-  `fulltext string`
-  
-`)`
-`ROW FORMAT DELIMITED`
-
-`FIELDS TERMINATED BY '|'`
-
-`STORED AS TEXTFILE`
-
-`LOCATION '/tmp/tweets_staging';`
-
+create external table tweets(
+  tweet_id bigint, 
+  created_unixtime bigint, 
+  created_time string, 
+  displayname string, 
+  msg string,
+  fulltext string
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|'
+STORED AS TEXTFILE
+LOCATION '/tmp/tweets_staging';
+````
 ### Display the top 10 twitter handles by tweet volume
 Query the tweets table, grouping tweet count by twitter handle and display only the top 10 in descending order.
 
