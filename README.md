@@ -31,7 +31,7 @@ Sandbox is intended to run on minimal hardware requirements, as a result, the Hi
 Run the optimize_hive_config script:
 ```
 # Increase Hive, Tez, and YARN memory
-`bash <(curl -s https://raw.githubusercontent.com/sakserv/twitter-nifi-lab-setup/master/optimize_hive_config.sh)`.
+bash <(curl -s https://raw.githubusercontent.com/sakserv/twitter-nifi-lab-setup/master/optimize_hive_config.sh)
 ```
 
 ##Install HDF (NiFi) via an Ambari Service
